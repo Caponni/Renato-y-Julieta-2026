@@ -108,45 +108,17 @@
         .map-card h3 { color: var(--dorado); font-size: 14px; text-transform: uppercase; margin-bottom: 10px; }
         iframe { width: 100%; height: 250px; border: 0; border-radius: 10px; margin: 15px 0; }
 
-        .modal {
-            display: none; 
-            position: fixed; 
-            z-index: 9999 !important; /* Valor muy alto para que nada lo tape */
-            left: 0; top: 0; width: 100%; height: 100%; 
-            background-color: rgba(0,0,0,0.7);
-        }
+        .modal { display: none; position: fixed; z-index: 9999 !important;  left: 0; top: 0; width: 100%; height: 100%;  background-color: rgba(0,0,0,0.7); }
+        .modal-content { background-color: #fdfaf6; margin: 10% auto; padding: 30px; border-radius: 15px; width: 85%; max-width: 400px; text-align: center; position: relative; box-shadow: 0 5px 25px rgba(0,0,0,0.5); }
+        .btn-copy { background-color: #b8926a; color: white; border: none; padding: 8px 15px; border-radius: 5px; margin-top: 10px; cursor: pointer; font-size: 12px; display: flex; align-items: center;  justify-content: center; gap: 5px; width: 100%; }
+        .btn-efectivo { background-color: var(--dorado); color: white; padding: 12px 20px; border: none; border-radius: 8px; cursor: pointer; font-family: 'Montserrat', sans-serif;
+            font-size: 13.3px; /* Tamaño estándar de links */ text-transform: uppercase; letter-spacing: 1px; display: inline-flex; align-items: center; gap: 10px; transition: 0.3s; }
         
-        .modal-content {
-            background-color: #fdfaf6;
-            margin: 10% auto;
-            padding: 30px;
-            border-radius: 15px;
-            width: 85%;
-            max-width: 400px;
-            text-align: center;
-            position: relative;
-            box-shadow: 0 5px 25px rgba(0,0,0,0.5);
-        }
+        /* Botón de cerrar más grande y posicionado */
+        .close-modal { position: absolute; top: 15px; right: 20px; font-size: 35px; font-weight: bold; cursor: pointer; color: var(--dorado); line-height: 1; }
         
-        /* Estilo para el nuevo botón de copiar */
-        .btn-copy {
-            background-color: #b8926a;
-            color: white;
-            border: none;
-            padding: 8px 15px;
-            border-radius: 5px;
-            margin-top: 10px;
-            cursor: pointer;
-            font-size: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 5px;
-            width: 100%;
-        }
-        position: relative; box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
-        .close-modal { position: absolute; top: 10px; right: 15px; font-size: 24px; cursor: pointer; color: #b8926a; }
-        .bank-details { text-align: left; margin-top: 20px; background: #fff; padding: 15px; border-radius: 8px; border: 1px dashed #b8926a; }
+        .close-modal:hover { color: var(--vino); }
+       .bank-details { text-align: left; margin-top: 20px; background: #fff; padding: 15px; border-radius: 8px; border: 1px dashed #b8926a; }
 
         /* 7. FORMULARIO RSVP */
         #rsvpForm { max-width: 450px; margin: 0 auto; display: flex; flex-direction: column; gap: 15px; }
@@ -270,30 +242,31 @@
         <section id="mesa-regalos" class="container reveal">
             <h2 class="cormorant" style="font-size: 36px;">Mesa de Regalos</h2>
             <p style="margin-bottom: 30px;">Tu presencia es nuestro mejor regalo, pero si deseas tener un detalle:</p>
-            
-            <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
-                <a href="https://www.amazon.com.mx/wedding" target="_blank" class="btn-gold" style="width: auto; padding: 12px 20px;"><i class="fab fa-amazon"></i> Amazon</a>
-                <a href="https://mesaderegalos.liverpool.com.mx/milistaderegalos/51971551" target="_blank" class="btn-gold" style="width: auto; padding: 12px 20px;"><i class="fas fa-shopping-bag"></i> Liverpool</a>
-                <button onclick="openModal()" class="btn-gold" style="width: auto; padding: 12px 20px;">
-                    <i class="fas fa-money-bill-wave"></i> Regalo en Efectivo
-                </button>
+            <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; align-items: center;">
+                <a href="https://www.amazon.com.mx/wedding" target="_blank" class="btn-gold" style="text-decoration: none; display: inline-flex; align-items: center; gap: 8px;">
+                    <i class="fab fa-amazon"></i> AMAZON
+                </a>
+                <a href="https://mesaderegalos.liverpool.com.mx/milistaderegalos/51971551" target="_blank" class="btn-gold" style="text-decoration: none; display: inline-flex; align-items: center; gap: 8px;">
+                    <i class="fas fa-shopping-bag"></i> LIVERPOOL
+                </a>
+            <button onclick="openModal()" class="btn-gold" style="cursor: pointer; display: inline-flex; align-items: center; gap: 8px; border: none; font-family: inherit;">
+                <i class="fas fa-money-bill-wave"></i> REGALO EN EFECTIVO
+            </button>
+        </div>
+        <div id="bankModal" class="modal">
+            <div class="modal-content">
+                <span class="close-modal" onclick="closeModal()">&times;</span>
+                <h3 class="cormorant" style="font-size: 28px; color: #b8926a; margin-top: 15px;">Datos Bancarios</h3>
+             <div class="bank-details montserrat" style="font-size: 14px; text-align: left; margin-top: 20px;">
+                 <p style="margin: 5px 0;"><strong>Banco:</strong> BBVA</p>
+                 <p style="margin: 5px 0;"><strong>Titular:</strong> Renato o Julieta</p>
+                 <p style="margin: 5px 0;"><strong>CLABE:</strong> <span id="clabe-number">012345678901234567</span></p>
+                 <button class="btn-copy" onclick="copyClabe()" style="margin-top: 15px; width: 100%; padding: 10px; background: #b8926a; color: white; border: none; border-radius: 5px; cursor: pointer;">
+                     <i class="far fa-copy"></i> Copiar CLABE
+                 </button>
+             </div>
             </div>
-        
-            <div id="bankModal" class="modal">
-                <div class="modal-content">
-                    <span class="close-modal" onclick="closeModal()">&times;</span>
-                    <h3 class="cormorant" style="font-size: 24px; color: #b8926a;">Datos Bancarios</h3>
-                    <div class="bank-details montserrat" style="font-size: 14px; text-align: left;">
-                        <p><strong>Banco:</strong> BBVA</p>
-                        <p><strong>Titular:</strong> Renato o Julieta</p>
-                        <p><strong>CLABE:</strong> <span id="clabe-number">012345678901234567</span></p>
-                        <button class="btn-copy" onclick="copyClabe()">
-                            <i class="far fa-copy"></i> Copiar CLABE
-                        </button>
-                    </div>
-                    <p style="font-size: 11px; margin-top: 15px; opacity: 0.6;">El botón copiará el número automáticamente.</p>
-                </div>
-            </div>
+        </div>
         </section>
 
         <section id="vestimenta" class="container reveal">
