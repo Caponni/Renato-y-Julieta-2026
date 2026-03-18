@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nuestra Boda - Renato & Julieta</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;600&family=Montserrat:wght@300;400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+    <style>
+        :root {
+            --dorado: #b8926a;
+            --crema: #fdfaf6;
+            --oscuro: #2c2c2c;
+            --vino: #8b1e1e;
+            --blanco: #ffffff;
+        }
+
+        /* Estructura Base */
+        body, html { 
+            margin: 0; padding: 0; 
+            font-family: 'Montserrat', sans-serif; 
+            background-color: var(--crema); 
+            color: var(--oscuro);
+            scroll-behavior: smooth; 
+            overflow-x: hidden;
+        }
+
+        .cormorant { font-family: 'Cormorant Garamond', serif; }
+        .container { padding: 80px 20px; text-align: center; max-width: 1000px; margin: 0 auto; }
+        
+        /* Animación de aparición */
+        .reveal { opacity: 0; transform: translateY(30px); transition: all 1s ease-out; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        /* 1. EL SOBRE (Solo al inicio) */
+        #envelope-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: #f4f1ea; display: flex; flex-direction: column;
+            align-items: center; justify-content: center; z-index: 4000;
+            transition: transform 1.2s cubic-bezier(0.8, 0, 0.2, 1);
+        }
+
+        /* 2. PORTADA (Lo primero tras abrir) */
+        #portable-cover {
+            width: 100%; height: 100vh; position: relative; overflow: hidden;
+        }
+        .cover-img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.7); }
+        .cover-text {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            text-align: center; color: white; width: 90%;
+        }
+        .cover-text h1 { font-size: clamp(40px, 8vw, 65px); margin: 0; font-weight: 300; letter-spacing: 5px; }
+
+        /* 3. TIMER */
+        .timer-container {
+            display: grid; grid-template-columns: repeat(4, 1fr);
+            gap: 15px; max-width: 500px; margin: 40px auto;
+        }
+        .timer-box { background: white; padding: 20px 10px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+        .timer-box span { display: block; font-size: 28px; font-weight: bold; color: var(--dorado); }
+        .timer-box label { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; }
+
+        /* 4. GALERÍA POLAROID */
+        .mySwiper { width: 300px; height: 420px; margin: 20px auto; overflow: visible !important; }
+        .swiper-slide { 
+            background: white; padding: 10px 10px 45px 10px; 
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1); border-radius: 2px;
+        }
+        .swiper-slide img { width: 100%; height: 100%; object-fit: cover; border: 1px solid #eee; }
+        .swiper-button-next, .swiper-button-prev { color: var(--dorado); display: none; }
+        @media (min-width: 1024px) {
+            .swiper-button-next, .swiper-button-prev { display: flex; }
+            .mySwiper { width: 400px; height: 520px; }
+        }
+
+        /* 5. ITINERARIO (Línea de tiempo) */
+        #programa { position: relative; }
+  /* 1. Aseguramos que el contenedor de la línea del tiempo sea relativo */
+.timeline-container {
+    position: relative;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 40px 0;
+}
+
+/* 2. La línea vertical: siempre al centro y detrás (z-index: 1) */
+.timeline-line {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: #e0e0e0;
+    transform: translateX(-50%);
+    z-index: 1; 
+}
+
+/* 3. Los items: ocupan el 50% del ancho */
+.timeline-item {
+    width: 50%;
+    margin-bottom: 40px;
+    position: relative;
+    z-index: 2; /* Por encima de la línea */
+}
+
+/* 4. Alineación específica para Lado IZQUIERDO */
+.timeline-item.left {
+    left: 0;
+    text-align: right;
+    padding-right: 45px; /* Espacio entre texto e icono */
+    box-sizing: border-box;
+}
+
+/* 5. Alineación específica para Lado DERECHO */
+.timeline-item.right {
+    left: 50%;
+    text-align: left;
+    padding-left: 45px; /* Espacio entre texto e icono */
+    box-sizing: border-box;
+}
+
+/* 6. Los ICONOS: Centrados matemáticamente sobre la línea */
+.timeline-icon {
+    position: absolute;
+    top: 0;
+    width: 40px;
+    height: 40px;
+    background: #b8926a; /* Tu color dorado */
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10; /* La capa más alta */
+}
+
+/* El truco final: -20px es la mitad del ancho del icono (40px) */
+.left .timeline-icon {
+    right: -20px; 
+}
+
+.right .timeline-icon {
+    left: -20px;
+}
+
+        /* 6. UBICACIÓN MAPAS */
+        .maps-grid { display: grid; grid-template-columns: 1fr; gap: 30px; margin-top: 40px; }
+        @media (min-width: 768px) { .maps-grid { grid-template-columns: 1fr 1fr; } }
+        .map-card { background: white; padding: 25px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+        .map-card h3 { color: var(--dorado); font-size: 14px; text-transform: uppercase; margin-bottom: 10px; }
+        iframe { width: 100%; height: 250px; border: 0; border-radius: 10px; margin: 15px 0; }
+
+        /* 7. FORMULARIO RSVP */
+        #rsvpForm { max-width: 450px; margin: 0 auto; display: flex; flex-direction: column; gap: 15px; }
+        #rsvpForm input, #rsvpForm select, #rsvpForm textarea {
+            width: 100%; padding: 15px; border: 1px solid #ddd; border-radius: 8px;
+            font-family: 'Montserrat'; font-size: 14px; box-sizing: border-box;
+        }
+        #rsvpForm textarea { height: 100px; resize: none; }
+        .btn-gold { 
+            background: var(--dorado); color: white; padding: 18px; 
+            border: none; border-radius: 8px; cursor: pointer;
+            text-transform: uppercase; font-weight: bold; letter-spacing: 2px;
+            transition: 0.3s; width: 100%;
+        }
+
+        /* 8. FOOTER */
+        footer { background: #1a1a1a; color: rgba(255,255,255,0.5); padding: 40px 20px; text-align: center; }
+        footer p { font-size: 10px; letter-spacing: 2px; margin: 0; text-transform: uppercase; }
+
+    </style>
+</head>
+<body>
+
+    <div id="envelope-overlay">
+        <h2 class="cormorant">¡Bienvenidos!</h2>
+        <div onclick="abrirSobre()" style="cursor:pointer; transition: transform 0.3s;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+            <svg width="100" height="100" viewBox="0 0 100 100">
+                <circle cx="50" cy="50" r="45" fill="#8b1e1e" />
+                <text x="50" y="62" text-anchor="middle" fill="white" font-family="serif" font-size="22">R&J</text>
+            </svg>
+        </div>
+        <p class="montserrat" style="font-size: 10px; margin-top: 20px; letter-spacing: 3px;">TOCA EL SELLO</p>
+    </div>
+
+    <div id="main-wrapper">
+        
+        <section id="portable-cover">
+            <img src="img/main.jpg" class="cover-img">
+            <div class="cover-text">
+                <h1 class="cormorant">Renato & Julieta</h1>
+                <p class="montserrat" style="letter-spacing: 5px; font-size: 12px; margin-top: 15px;">26 DE DICIEMBRE DE 2026</p>
+            </div>
+        </section>
+
+        <section id="hero" class="container reveal">
+            <h2 class="cormorant" style="font-size: 32px;">¡Faltan solo!</h2>
+            <div class="timer-container">
+                <div class="timer-box"><span id="months">0</span><label>Meses</label></div>
+                <div class="timer-box"><span id="days">0</span><label>Días</label></div>
+                <div class="timer-box"><span id="hours">0</span><label>Horas</label></div>
+                <div class="timer-box"><span id="minutes">0</span><label>Min</label></div>
+            </div>
+        </section>
+
+        <section id="galeria" class="container reveal">
+            <h2 class="cormorant" style="font-size: 36px;">Nuestra Historia</h2>
+            <div class="swiper mySwiper">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide"><img src="img/1.jpg"></div>
+                    <div class="swiper-slide"><img src="img/2.jpg"></div>
+                    <div class="swiper-slide"><img src="img/3.jpg"></div>
+                    <div class="swiper-slide"><img src="img/4.jpg"></div>
+                    <div class="swiper-slide"><img src="img/5.jpg"></div>
+                    <div class="swiper-slide"><img src="img/6.jpg"></div>
+                    <div class="swiper-slide"><img src="img/7.jpg"></div>
+                </div>
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+            </div>
+        </section>
+
+        <section id="programa" class="container reveal">
+            <h2 class="cormorant" style="font-size: 36px;">Itinerario</h2>
+            <div class="timeline-container">
+                <div class="timeline-line"></div>
+                
+                <div class="timeline-item left reveal">
+                    <div class="timeline-icon"><i class="fas fa-church"></i></div>
+                    <h3 class="cormorant">Ceremonia Religiosa</h3>
+                    <p class="montserrat" style="font-size: 13px; color: var(--dorado);">3:00 PM</p>
+                </div>
+                <div class="timeline-item right reveal">
+                    <div class="timeline-icon"><i class="fas fa-cocktail"></i></div>
+                    <h3 class="cormorant">Recepción</h3>
+                    <p class="montserrat" style="font-size: 13px; color: var(--dorado);">5:30 PM</p>
+                </div>
+                <div class="timeline-item left reveal">
+                    <div class="timeline-icon"><i class="fas fa-pen-nib"></i></div>
+                    <h3 class="cormorant">Ceremonia Civil</h3>
+                    <p class="montserrat" style="font-size: 13px; color: var(--dorado);">6:30 PM</p>
+                </div>
+                <div class="timeline-item right reveal">
+                    <div class="timeline-icon"><i class="fas fa-utensils"></i></div>
+                    <h3 class="cormorant">Comida</h3>
+                    <p class="montserrat" style="font-size: 13px; color: var(--dorado);">7:00 PM</p>
+                </div>
+                <div class="timeline-item left reveal">
+                    <div class="timeline-icon"><i class="fas fa-compact-disc"></i></div>
+                    <h3 class="cormorant">Fiesta</h3>
+                    <p class="montserrat" style="font-size: 13px; color: var(--dorado);">8:00 PM</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="ubicacion" class="container reveal">
+            <h2 class="cormorant" style="font-size: 36px;">Ubicación</h2>
+            <div class="maps-grid">
+                <div class="map-card">
+                    <h3 class="montserrat">La Ceremonia</h3>
+                    <p class="cormorant" style="font-size: 22px;">Santuario del Sagrado Corazón</p>
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3721.21852445851!2d-101.6828555!3d21.1436941!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x842bc02e604f7c75%3A0xc3676c6978182998!2sSantuario%20del%20Sagrado%20Coraz%C3%B3n!5e0!3m2!1ses!2smx!4v1710710000000"></iframe>
+                </div>
+                <div class="map-card">
+                    <h3 class="montserrat">La Fiesta</h3>
+                    <p class="cormorant" style="font-size: 22px;">Jardín de Eventos El Diamante</p>
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3722.56456722!2d-101.63!3d21.11!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjHCsDA2JzM2LjAiTiAxMDHCsDM3JzQ4LjAiVw!5e0!3m2!1ses!2smx!4v1710710000000"></iframe>
+                </div>
+            </div>
+        </section>
+
+        <section id="mesa-regalos" class="container reveal">
+            <h2 class="cormorant" style="font-size: 36px;">Mesa de Regalos</h2>
+            <p style="margin-bottom: 30px;">Tu presencia es nuestro mejor regalo, pero si deseas tener un detalle:</p>
+            <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+                <a href="https://www.amazon.com.mx/wedding" class="btn-gold" style="width: auto; padding: 15px 40px;"><i class="fab fa-amazon"></i> Amazon</a>
+                <a href="https://mesaderegalos.liverpool.com.mx/milistaderegalos/51971551" class="btn-gold" style="width: auto; padding: 15px 40px;"><i class="fas fa-shopping-bag"></i> Liverpool</a>
+            </div>
+        </section>
+
+        <section id="rsvp" class="container reveal" style="background: #f9f7f2;">
+            <h2 class="cormorant" style="font-size: 36px;">Confirmar Asistencia</h2>
+            <p style="margin-bottom: 30px;">Por favor confirma antes del 1 de Diciembre</p>
+            <form id="rsvpForm">
+                <input type="text" name="nombre" placeholder="Nombre completo" required>
+                <select name="asistencia" required>
+                    <option value="" disabled selected>¿Asistirás?</option>
+                    <option value="Si">Sí, ¡con mucho gusto!</option>
+                    <option value="No">Lo siento, no puedo</option>
+                </select>
+                <textarea name="mensaje" placeholder="¿Alguna alergia o mensaje para nosotros?"></textarea>
+                <button type="submit" id="btnEnviar" class="btn-gold">Confirmar ahora</button>
+            </form>
+            <p id="success-msg" style="display:none; color: #4a7c44; font-weight: bold; margin-top: 20px;">
+                <i class="fas fa-check-circle"></i> ¡Confirmación enviada con éxito!
+            </p>
+        </section>
+
+        <footer>
+            <p>© Todos los derechos reservados 2026</p>
+            <p style="margin-top: 10px; font-size: 8px; opacity: 0.5;">C & V</p>
+        </footer>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script>
+        // Función para abrir el sobre
+        function abrirSobre() {
+            document.getElementById('envelope-overlay').style.transform = "translateY(-100%)";
+            // Activa las animaciones de aparición
+            setTimeout(reveal, 500);
+        }
+
+        // Swiper (Galería)
+        const swiper = new Swiper(".mySwiper", {
+            effect: "cards",
+            grabCursor: true,
+            navigation: { nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" },
+            mousewheel: { invert: false },
+        });
+
+        // Cuenta Regresiva
+        const targetDate = new Date("December 26, 2026 15:00:00").getTime();
+        function updateTimer() {
+            const now = new Date().getTime();
+            const diff = targetDate - now;
+            if (diff <= 0) return;
+
+            const msPorMinuto = 1000 * 60;
+            const msPorHora = msPorMinuto * 60;
+            const msPorDia = msPorHora * 24;
+            const msPorMes = msPorDia * 30.44; 
+
+            document.getElementById('months').innerText = Math.floor(diff / msPorMes);
+            document.getElementById('days').innerText = Math.floor((diff % msPorMes) / msPorDia);
+            document.getElementById('hours').innerText = Math.floor((diff % msPorDia) / msPorHora);
+            document.getElementById('minutes').innerText = Math.floor((diff % msPorHora) / msPorMinuto);
+        }
+        setInterval(updateTimer, 1000);
+        updateTimer();
+
+        // Scroll Reveal
+        function reveal() {
+            const reveals = document.querySelectorAll(".reveal");
+            reveals.forEach(el => {
+                const rect = el.getBoundingClientRect();
+                if (rect.top < window.innerHeight - 50) el.classList.add("active");
+            });
+        }
+        window.addEventListener("scroll", reveal);
+
+        // RSVP Logic
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbzB2jQto78RkV7mRYgqTcATH2lQNiK-U_LiT9VjHuUBM363mOL_wKbPqXvHVjl35Pm8AQ/exec';
+        const form = document.getElementById('rsvpForm');
+        form.addEventListener('submit', e => {
+            e.preventDefault();
+            const btn = document.getElementById('btnEnviar');
+            btn.innerText = "Registrando...";
+            btn.disabled = true;
+            
+            fetch(scriptURL, { method: 'POST', body: new FormData(form), mode: 'no-cors' })
+                .then(() => {
+                    document.getElementById('success-msg').style.display = 'block';
+                    form.reset();
+                    btn.innerText = "Confirmar ahora";
+                    btn.disabled = false;
+                })
+                .catch(() => {
+                    alert("Hubo un error al enviar. Por favor intenta de nuevo.");
+                    btn.disabled = false;
+                    btn.innerText = "Confirmar ahora";
+                });
+        });
+    </script>
+</body>
+</html>
