@@ -20,15 +20,7 @@
         }
 
         /* Estructura Base */
-        body, html { 
-            margin: 0; padding: 0; 
-            font-family: 'Montserrat', sans-serif; 
-            background-color: var(--crema); 
-            color: var(--oscuro);
-            scroll-behavior: smooth; 
-            overflow-x: hidden;
-        }
-
+        body, html { margin: 0; padding: 0; font-family: 'Montserrat', sans-serif; background-color: var(--crema); color: var(--oscuro); scroll-behavior: smooth; overflow-x: hidden; }
         .cormorant { font-family: 'Cormorant Garamond', serif; }
         .container { padding: 80px 20px; text-align: center; max-width: 1000px; margin: 0 auto; }
         
@@ -45,31 +37,20 @@
         }
 
         /* 2. PORTADA (Lo primero tras abrir) */
-        #portable-cover {
-            width: 100%; height: 100vh; position: relative; overflow: hidden;
-        }
+        #portable-cover { width: 100%; height: 100vh; position: relative; overflow: hidden; }
         .cover-img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.7); }
-        .cover-text {
-            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            text-align: center; color: white; width: 90%;
-        }
+        .cover-text { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; color: white; width: 90%; }
         .cover-text h1 { font-size: clamp(40px, 8vw, 65px); margin: 0; font-weight: 300; letter-spacing: 5px; }
 
         /* 3. TIMER */
-        .timer-container {
-            display: grid; grid-template-columns: repeat(4, 1fr);
-            gap: 15px; max-width: 500px; margin: 40px auto;
-        }
+        .timer-container { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; max-width: 500px; margin: 40px auto; }
         .timer-box { background: white; padding: 20px 10px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
         .timer-box span { display: block; font-size: 28px; font-weight: bold; color: var(--dorado); }
         .timer-box label { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; }
 
         /* 4. GALERÍA POLAROID */
         .mySwiper { width: 300px; height: 420px; margin: 20px auto; overflow: visible !important; }
-        .swiper-slide { 
-            background: white; padding: 10px 10px 45px 10px; 
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1); border-radius: 2px;
-        }
+        .swiper-slide { background: white; padding: 10px 10px 45px 10px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); border-radius: 2px; }
         .swiper-slide img { width: 100%; height: 100%; object-fit: cover; border: 1px solid #eee; }
         .swiper-button-next, .swiper-button-prev { color: var(--dorado); display: none; }
         @media (min-width: 1024px) {
@@ -95,69 +76,20 @@
         iframe { width: 100%; height: 250px; border: 0; border-radius: 10px; margin: 15px 0; }
 
         /* 1. Estilos del Contenedor de Botones */
-.gift-buttons-container {
-    display: flex;
-    gap: 15px;
-    justify-content: center;
-    flex-wrap: wrap; 
-    align-items: center;
-    max-width: 900px;
-    margin: 0 auto;
-}
+        .gift-buttons-container { display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; align-items: center; max-width: 900px; margin: 0 auto; }
 
-/* Fuerza el mismo tamaño solo en Computadora */
-@media (min-width: 1024px) {
-    .gift-buttons-container .btn-gold {
-        flex: 1; 
-        max-width: 250px; 
-        padding: 15px 10px;
-        justify-content: center;
-    }
-}
+        /* Fuerza el mismo tamaño solo en Computadora */
+        @media (min-width: 1024px) {
+            .gift-buttons-container .btn-gold { flex: 1; max-width: 250px; padding: 15px 10px; justify-content: center; }
+            }
 
-/* 2. Estilos del Modal (Corregido para estar por encima de todo) */
-.modal {
-    display: none; 
-    position: fixed; 
-    z-index: 9999 !important; 
-    left: 0; top: 0; width: 100%; height: 100%; 
-    background-color: rgba(0,0,0,0.7);
-}
-
-.modal-content {
-    background-color: #fdfaf6;
-    margin: 10% auto;
-    padding: 30px;
-    border-radius: 15px;
-    width: 85%;
-    max-width: 400px;
-    text-align: center;
-    position: relative;
-    box-shadow: 0 5px 25px rgba(0,0,0,0.5);
-}
-
-.close-modal {
-    position: absolute;
-    top: 15px; right: 20px;
-    font-size: 35px;
-    font-weight: bold;
-    cursor: pointer;
-    color: #b8926a;
-    line-height: 1;
-}
-
-.btn-copy {
-    background-color: #b8926a;
-    color: white;
-    border: none;
-    padding: 10px;
-    border-radius: 5px;
-    margin-top: 15px;
-    cursor: pointer;
-    width: 100%;
-}
+        /* 2. Estilos del Modal (Corregido para estar por encima de todo) */
+        .modal { display: none; position: fixed; z-index: 9999 !important; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.7); }
+        .modal-content { background-color: #fdfaf6; margin: 10% auto; padding: 30px; border-radius: 15px; width: 85%; max-width: 400px; text-align: center; position: relative; box-shadow: 0 5px 25px rgba(0,0,0,0.5); }
+        .close-modal { position: absolute; top: 15px; right: 20px; font-size: 35px; font-weight: bold; cursor: pointer; color: #b8926a; line-height: 1; }
+        .btn-copy { background-color: #b8926a; color: white; border: none; padding: 10px; border-radius: 5px; margin-top: 15px; cursor: pointer; width: 100%; }
         .close-modal:hover { color: var(--vino); }
-       .bank-details { text-align: left; margin-top: 20px; background: #fff; padding: 15px; border-radius: 8px; border: 1px dashed #b8926a; }
+        .bank-details { text-align: left; margin-top: 20px; background: #fff; padding: 15px; border-radius: 8px; border: 1px dashed #b8926a; }
 
         /* 7. FORMULARIO RSVP */
         #rsvpForm { max-width: 450px; margin: 0 auto; display: flex; flex-direction: column; gap: 15px; }
@@ -166,17 +98,9 @@
             font-family: 'Montserrat'; font-size: 14px; box-sizing: border-box;
         }
         #rsvpForm textarea { height: 100px; resize: none; }
-        .btn-gold { 
-            background: var(--dorado); color: white; padding: 18px; 
-            border: none; border-radius: 8px; cursor: pointer;
-            text-transform: uppercase; font-weight: bold; letter-spacing: 2px;
-            transition: 0.3s; width: 100%;
-        }
-
-        /* 8. FOOTER */
+        .btn-gold { background: var(--dorado); color: white; padding: 18px; border: none; border-radius: 8px; cursor: pointer; text-transform: uppercase; font-weight: bold; letter-spacing: 2px; transition: 0.3s; width: 100%; }
         footer { background: #1a1a1a; color: rgba(255,255,255,0.5); padding: 40px 20px; text-align: center; }
         footer p { font-size: 10px; letter-spacing: 2px; margin: 0; text-transform: uppercase; }
-
     </style>
 </head>
 <body>
@@ -193,7 +117,6 @@
     </div>
 
     <div id="main-wrapper">
-        
         <section id="portable-cover">
             <img src="img/main.jpg" class="cover-img">
             <div class="cover-text">
