@@ -75,15 +75,15 @@
         .map-card h3 { color: var(--dorado); font-size: 14px; text-transform: uppercase; margin-bottom: 10px; }
         iframe { width: 100%; height: 250px; border: 0; border-radius: 10px; margin: 15px 0; }
 
-        /* 1. Estilos del Contenedor de Botones */
+        /* Estilos del Contenedor de Botones */
         .gift-buttons-container { display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; align-items: center; max-width: 900px; margin: 0 auto; }
 
         /* Fuerza el mismo tamaño solo en Computadora */
         @media (min-width: 1024px) {
             .gift-buttons-container .btn-gold { flex: 1; max-width: 250px; padding: 15px 10px; justify-content: center; }
-            }
+        }
 
-        /* 2. Estilos del Modal (Corregido para estar por encima de todo) */
+        /* Estilos del Modal */
         .modal { display: none; position: fixed; z-index: 9999 !important; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.7); }
         .modal-content { background-color: #fdfaf6; margin: 10% auto; padding: 30px; border-radius: 15px; width: 85%; max-width: 400px; text-align: center; position: relative; box-shadow: 0 5px 25px rgba(0,0,0,0.5); }
         .close-modal { position: absolute; top: 15px; right: 20px; font-size: 35px; font-weight: bold; cursor: pointer; color: #b8926a; line-height: 1; }
@@ -217,7 +217,7 @@
             </div>
             <div id="bankModal" class="modal">
                 <div class="modal-content">
-                    <span class="close-modal" onclick="closeModal()">&times;</span>
+                    <span class="close-modal" onclick="closeModal()">×</span>
                     <h3 class="cormorant" style="font-size: 28px; color: #b8926a; margin-top: 15px;">Datos Bancarios</h3>
                     <div class="bank-details montserrat" style="font-size: 14px; text-align: left; margin-top: 20px;">
                         <p><strong>Banco:</strong> BBVA</p>
@@ -311,6 +311,7 @@
         }
         window.addEventListener("scroll", reveal);
 
+        // Envío del RSVP a través de GET (Evita bloqueos de CORS)
         const scriptURL = 'https://script.google.com/macros/s/AKfycbxnLvAqZvf01IByrTuo39RpHoQwGXnEBmghMIokL1idXmd_0RfkWbT6HdPYrxUKs5B8/exec';
         const form = document.getElementById('rsvpForm');
         
@@ -346,26 +347,8 @@
                 btn.innerText = "Confirmar ahora";
             });
         });
-                
-            .then(res => res.json())
-            .then(response => {
-                if(response.result === 'success') {
-                    document.getElementById('success-msg').style.display = 'block';
-                    form.reset();
-                } else {
-                    alert("Hubo un error en el servidor. Por favor intenta de nuevo.");
-                }
-                btn.innerText = "Confirmar ahora";
-                btn.disabled = false;
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert("Hubo un error al enviar. Por favor intenta de nuevo.");
-                btn.disabled = false;
-                btn.innerText = "Confirmar ahora";
-            });
-        });
 
+        // Funciones del Modal de Cuenta Bancaria
         function openModal() {
             document.getElementById("bankModal").style.display = "block";
         }
