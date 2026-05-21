@@ -311,27 +311,39 @@
         }
         window.addEventListener("scroll", reveal);
 
-        // RSVP Logic
-        const scriptURL = 'https://script.google.com/macros/s/AKfycbzB2jQto78RkV7mRYgqTcATH2lQNiK-U_LiT9VjHuUBM363mOL_wKbPqXvHVjl35Pm8AQ/exec';
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbyRs0JN7Zp1Tm_eN3bWZspsNvpb2Wz1sK7adU1L_sEwNuW8ktgsf_TB_eydvK1LoCC5/exec';
         const form = document.getElementById('rsvpForm');
         form.addEventListener('submit', e => {
             e.preventDefault();
             const btn = document.getElementById('btnEnviar');
             btn.innerText = "Registrando...";
             btn.disabled = true;
-            
-            fetch(scriptURL, { method: 'POST', body: new FormData(form), mode: 'no-cors' })
-                .then(() => {
+                        const formData = new FormData(form);
+            const dataParams = new URLSearchParams(formData);
+            fetch(scriptURL, { 
+                method: 'POST', 
+                body: dataParams, // Enviamos los parámetros limpios
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            })
+            .then(res => res.json())
+            .then(response => {
+                if(response.result === 'success') {
                     document.getElementById('success-msg').style.display = 'block';
                     form.reset();
-                    btn.innerText = "Confirmar ahora";
-                    btn.disabled = false;
-                })
-                .catch(() => {
-                    alert("Hubo un error al enviar. Por favor intenta de nuevo.");
-                    btn.disabled = false;
-                    btn.innerText = "Confirmar ahora";
-                });
+                } else {
+                    alert("Hubo un error en el servidor. Por favor intenta de nuevo.");
+                }
+                btn.innerText = "Confirmar ahora";
+                btn.disabled = false;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert("Hubo un error al enviar. Por favor intenta de nuevo.");
+                btn.disabled = false;
+                btn.innerText = "Confirmar ahora";
+            });
         });
 
         function openModal() {
