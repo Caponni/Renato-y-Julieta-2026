@@ -243,13 +243,13 @@
             <h2 class="cormorant" style="font-size: 36px;">Confirmar Asistencia</h2>
             <p style="margin-bottom: 30px;">Por favor confirma antes del 1 de Diciembre</p>
             <form id="rsvpForm">
-                <input type="text" name="nombre" placeholder="Nombre completo" required>
-                <select name="asistencia" required>
+                <input type="text" name="Nombre" placeholder="Nombre completo" required>
+                <select name="Asistencia" required>
                     <option value="" disabled selected>¿Asistirás?</option>
                     <option value="Si">Sí, ¡con mucho gusto!</option>
                     <option value="No">Lo siento, no puedo</option>
                 </select>
-                <textarea name="mensaje" placeholder="¿Alguna alergia o mensaje para nosotros?"></textarea>
+                <textarea name="Mensaje" placeholder="¿Alguna alergia o mensaje para nosotros?"></textarea>
                 <button type="submit" id="btnEnviar" class="btn-gold">Confirmar ahora</button>
             </form>
             <p id="success-msg" style="display:none; color: #4a7c44; font-weight: bold; margin-top: 20px;">
@@ -311,7 +311,7 @@
         }
         window.addEventListener("scroll", reveal);
 
-        const scriptURL = 'https://script.google.com/macros/s/AKfycbyRs0JN7Zp1Tm_eN3bWZspsNvpb2Wz1sK7adU1L_sEwNuW8ktgsf_TB_eydvK1LoCC5/exec';
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbxXVF--cBgw7AdhwDneW3exZeK3Hxq_p7QceY5mrs7MTujMzV803A2tqWBEbD_pgIua/exec';
         const form = document.getElementById('rsvpForm');
         form.addEventListener('submit', e => {
             e.preventDefault();
