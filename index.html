@@ -311,22 +311,42 @@
         }
         window.addEventListener("scroll", reveal);
 
-        const scriptURL = 'https://script.google.com/macros/s/AKfycbybnrkFopLnBLMPtJjgIwFGfQ7rSHU7A09cAnne349sOoTFbdUpoec8Tjblv-IPo65u/exec';
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbxnLvAqZvf01IByrTuo39RpHoQwGXnEBmghMIokL1idXmd_0RfkWbT6HdPYrxUKs5B8/exec';
         const form = document.getElementById('rsvpForm');
+        
         form.addEventListener('submit', e => {
             e.preventDefault();
             const btn = document.getElementById('btnEnviar');
             btn.innerText = "Registrando...";
             btn.disabled = true;
-                        const formData = new FormData(form);
+            
+            const formData = new FormData(form);
             const dataParams = new URLSearchParams(formData);
-            fetch(scriptURL, { 
-                method: 'POST', 
-                body: dataParams, // Enviamos los parámetros limpios
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                }
+            const urlConDatos = `${scriptURL}?${dataParams.toString()}`;
+            
+            fetch(urlConDatos, { 
+                method: 'GET',
+                mode: 'cors'
             })
+            .then(res => res.json())
+            .then(response => {
+                if(response.result === 'success') {
+                    document.getElementById('success-msg').style.display = 'block';
+                    form.reset();
+                } else {
+                    alert("Hubo un error en el servidor de Google. Por favor intenta de nuevo.");
+                }
+                btn.innerText = "Confirmar ahora";
+                btn.disabled = false;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert("Hubo un error al enviar. Por favor intenta de nuevo.");
+                btn.disabled = false;
+                btn.innerText = "Confirmar ahora";
+            });
+        });
+                
             .then(res => res.json())
             .then(response => {
                 if(response.result === 'success') {
